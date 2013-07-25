@@ -13,18 +13,52 @@ function sendToNewspac(currentUrl)
 {
     var req = new XMLHttpRequest();
     //http://www.news-pac.com/api/article?url={canonical_url}
-    req.open("GET", "http://www.news-pac.com/api/", true);
+    var domain = "http://www.news-pac.com/api/article";
+    var params = "?url=" + currentUrl;
+    url = domain + params; 
+    //console.log(url);
+    req.open("GET", url, true);
 
-    var params = "article?" + 
-                 "url={" + currentUrl + "}";
-    req.send(params);
-
-    req.onreadystatechange = function() 
-    { 
-        // If the request completed, close the extension popup
+    req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+    req.onreadystatechange = function() { 
         if (req.readyState == 4) {
-            console.log(req.responseText);
+            if (req.status == 200) {  //if in newspac 
+                console.log(req.responseType);
+                var resp = JSON.parse(req.responseText);
+                console.log(resp);
+            
+            } else if (req.status == 404) {  //else not in newspac
+                  console.log("not in newspac");  
+                  //call kuansim API
+            }
         }
     };
-
+    req.send();
+    return false;
 }
+
+// function addToKuansim(){
+// {
+//     var req = new XMLHttpRequest();
+//     req.open("POST", "localhost", true);
+
+//     var params = "title=" + document.getElementById("title").value + 
+//                  "&url=" + document.getElementById("url").value + 
+//                  "&summary=" + document.getElementById("summary").value +
+//                  "&tags=" + document.getElementById("tags").value;
+
+//     req.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+//     req.setRequestHeader("Content-length", params.length);
+//     req.setRequestHeader("Connection", "close");
+
+//     req.send(params);
+
+//     req.onreadystatechange = function() 
+//     { 
+//         // If the request completed, close the extension popup
+//         if (req.readyState == 4)
+//             if (req.status == 200) window.close();
+//     };
+
+//     return false;
+// }
