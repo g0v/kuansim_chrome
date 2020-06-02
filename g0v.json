@@ -19,7 +19,7 @@
     }
   ],
   "keywords": [
-    "javascript",
+    "javascript"
   ],
   "audience": [
     "public"
@@ -32,6 +32,6 @@
   ],
   "thumbnail": "",
   "needs": [
-    "programmer",
+    "programmer"
   ]
 }
